@@ -1,5 +1,5 @@
+const PlanModel = require("../models/PlanModel");
 const express = require('express');
-const PlanModel = require('../models/planModel');
 const PlanRouter = express.Router();
 const factory = require("../helpers/factory");
 const protectRoute = require("./authHelper");
