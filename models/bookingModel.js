@@ -1,15 +1,16 @@
 const mongoose = require("mongoose");
-let {PASSWORD} =require("../secrets");
+let { PASSWORD } = require('../secrets')||process.env;
+// console.log(PASSWORD);
 // link
 // connnection form 
 let DB_LINK = `mongodb+srv://admin:${PASSWORD}@cluster0.fzqgp.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`;
 mongoose.connect(DB_LINK)
-.then(function () {
-    // console.log(db);
-    console.log("connected to db")
-}).catch(function (err) {
-    console.log("err", err);
-})
+    .then(function () {
+        // console.log(db);
+        console.log("connected to db")
+    }).catch(function (err) {
+        console.log("err", err);
+    })
 
 const bookingSchema = new mongoose.Schema({
     user: {

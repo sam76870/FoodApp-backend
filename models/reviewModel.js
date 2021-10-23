@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-let {PASSWORD} = require("../secrets");
+let {PASSWORD} = require('../secrets')||process.env;
 // link
 // connnection form 
 let DB_LINK = `mongodb+srv://admin:${PASSWORD}@cluster0.fzqgp.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`;

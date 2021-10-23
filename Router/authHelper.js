@@ -1,6 +1,6 @@
 // let flag = true;
 const jwt = require("jsonwebtoken");
-const { JWT_KEY } = require("../secrets");
+const { JWT_KEY } = require('../secrets')||process.env;
 function protectRoute(req, res, next) {
     // console.log(req.cookies);
     try {
