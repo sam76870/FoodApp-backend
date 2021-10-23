@@ -7,10 +7,9 @@ const BookingModel = require("../models/bookingModel");
 const factory = require("../helpers/factory");
 const userModel = require('../models/userModel');
 const Razorpay = require("razorpay");
-let { KEY_ID, KEY_SECRET } = require('../secrets')||process.env;
+let { KEY_ID, KEY_SECRET } = require('../secrets') || process.env;
 // process.env.KEY_ID='rzp_test_g3cpvfOCs2b6ro';
-// console.log(process.env);
-// console.log(KEY_ID);
+console.log(process.env);
 var razorpay = new Razorpay({
     key_id: KEY_ID,
     key_secret: KEY_SECRET,
