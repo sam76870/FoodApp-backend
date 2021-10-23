@@ -6,8 +6,8 @@ const protectRoute = require("./authHelper");
 const BookingModel = require("../models/bookingModel");
 const factory = require("../helpers/factory");
 const userModel = require('../models/userModel');
-let { KEY_ID, KEY_SECRET } = require("../secrets");
 const Razorpay = require("razorpay");
+let { KEY_ID, KEY_SECRET } =require("../secrets");
 var razorpay = new Razorpay({
     key_id: KEY_ID,
     key_secret: KEY_SECRET,
@@ -49,7 +49,7 @@ const initiateBooking = async function (req, res) {
 // delete => Booking model me change as well as userModel => change user
 const deleteBooking = async function (req, res) {
     try {
-        let bookings = await bookingModel.findById(req.body.id);
+        let bookings = await BookingModel.findById(req.body.id);
         console.log("Bookings", bookings);
         let userId = bookings.plan;
         let user = await userModel.findByIdAndUpdate(userId);
@@ -59,7 +59,7 @@ const deleteBooking = async function (req, res) {
         await user.save();
         res.status(200).json({
             message: "Booking Deleted",
-            review: booking
+            booking: booking
         })
     } catch (err) {
         res.status(500).json({

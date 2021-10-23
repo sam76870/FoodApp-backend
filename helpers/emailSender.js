@@ -1,6 +1,6 @@
 
 const nodemailer = require("nodemailer");
-const config = require('../secrets');
+const config = process.env || require('../secrets');
 
 // async..await is not allowed in global scope, must use a wrapper
 module.exports = async function main(token) {

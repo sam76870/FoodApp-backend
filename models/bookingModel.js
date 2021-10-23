@@ -1,8 +1,10 @@
 const mongoose = require("mongoose");
-let { DB_LINK } = require("../secrets");
+let {PASSWORD} =require("../secrets");
 // link
 // connnection form 
-mongoose.connect(DB_LINK).then(function () {
+let DB_LINK = `mongodb+srv://admin:${PASSWORD}@cluster0.fzqgp.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`;
+mongoose.connect(DB_LINK)
+.then(function () {
     // console.log(db);
     console.log("connected to db")
 }).catch(function (err) {
