@@ -6,14 +6,17 @@ import { Link } from 'react-router-dom';
 
 function AllPlans() {
     const [arr, arrset] = useState([]);
-    useEffect(async () => {
+    useEffect( () => {
+        async function fn() {
         try {
             const data = await axios.get("/api/plans?page=1&&limit=3");
             console.log(data.data);
             arrset(data.data.data);
         } catch (err) {
             console.log(err);
-        }
+        } 
+    }
+    fn();
     }, [])
     return (
         <div className='allplansCard'>
