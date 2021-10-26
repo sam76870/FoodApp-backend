@@ -1,15 +1,16 @@
 const mongoose = require("mongoose");
-let { PASSWORD} = process.env || require('../secrets');
+let { PASSWORD } = process.env || require('../secrets');
 const emailValidator = require("email-validator");
+const bcrypt = require('bcrypt');
 // connection form
 let DB_LINK = `mongodb+srv://admin:${PASSWORD}@cluster0.fzqgp.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`;
 mongoose.connect(DB_LINK)
-.then(function (db) {
-    // console.log(db);
-    console.log("connected to db");
-}).catch(function (err) {
-    console.log("err", err);
-})
+    .then(function (db) {
+        // console.log(db);
+        console.log("connected to db");
+    }).catch(function (err) {
+        console.log("err", err);
+    })
 
 // syntax of adding entries in mongodb
 const userSchema = new mongoose.Schema({
@@ -58,24 +59,21 @@ const userSchema = new mongoose.Schema({
 
 // order matters
 userSchema.pre("save", function () {
+    // typical to encrypt text
+    const salt = await bcrypt.genSalt(10);
+    // password convert to text
+    this.password = await bcrypt.hash(this.password, salt);
     this.confirmPassword = undefined;
 })
 userSchema.method.resetHandler = function (password, confirmPassword) {
+    const salt = await bcrypt.genSalt(10);
+    // password convert to text
+    this.password = await bcrypt.hash(this.password, salt);
     this.password = password;
     this.confirmPassword = this.confirmPassword;
     // token reuse is not possible
     this.token = undefined;
 }
 const userModel = mongoose.model("userModel", userSchema);
-// (async function createUser() {
-//     let userObj = {
-//         name: "Shubham",
-//         passowrd: "123456789",
-//         age: 24,
-//         email: "abc@gmail.com",
-//         confirmPassword: "123456789",
-//     }
-//     let user = await userModel.create(userObj);
-//     console.log("user", user);
-// })();
+
 module.exports = userModel

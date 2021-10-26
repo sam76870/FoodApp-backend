@@ -4,6 +4,7 @@ const express = require('express');
 const { JWT_KEY } = process.env || require('../secrets');
 // const emailSender = require('../externalServices/emailSender')
 const authRouter = express.Router();
+const bcrypt = require('bcrypt');
 authRouter
     .post("/signup", setCreatedAt, signupUser)
     .post("/login", loginUser)
@@ -13,7 +14,6 @@ authRouter
 async function signupUser(req, res) {
     // email, password, name
     try {
-        // let { email, password, name } = req.body;
         let userObj = req.body;
         console.log("userObj", userObj);
         let user = await userModel.create(userObj);
@@ -33,10 +33,12 @@ async function signupUser(req, res) {
 }
 async function loginUser(req, res) {
     try {
-        if (req.body.email) {
-            let userCredential = await userModel.findOne({ email: req.body.email });
+        let { email, password } = req.body;
+        let userCredential = await userModel.findOne({ email });
+        if (userCredential) {
             if (userCredential) {
-                if (userCredential.password == req.body.password) {
+                let areEqual = await bcrypt.compare(password,userCredential.password)
+                if (areEqual) {
                     // http header
                     let payload = userCredential["_id"];
                     // console.log(JWT_KEY);
