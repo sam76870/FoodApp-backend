@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-let { PASSWORD } = require('../secrets')||process.env;
+let { PASSWORD } = process.env || require('../secrets');
 // console.log(PASSWORD);
 // link
 // connnection form 

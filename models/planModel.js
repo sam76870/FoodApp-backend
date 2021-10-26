@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 const emailValidator = require("email-validator")
-let {PASSWORD} = require("../secrets");
+let {PASSWORD} = process.env || require('../secrets');
 // link
 // connnection form 
 let DB_LINK = `mongodb+srv://admin:${PASSWORD}@cluster0.fzqgp.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`;
