@@ -12,7 +12,7 @@ function Signup(props) {
 
     const handleSignup = async () => {
         try {
-            const data = await axios.post("https://fodapp-backend.herokuapp.com/api/users/signup", {
+            const data = await axios.post("https://fodapp-backend.herokuapp.com/api/auth/signup", {
                 name: name,
                 email: email,
                 password: password,
