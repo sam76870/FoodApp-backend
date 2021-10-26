@@ -58,22 +58,23 @@ const userSchema = new mongoose.Schema({
 });
 
 // order matters
-userSchema.pre("save", function () {
+userSchema.pre("save", async function () {
     // typical to encrypt text
     const salt = await bcrypt.genSalt(10);
     // password convert to text
     this.password = await bcrypt.hash(this.password, salt);
     this.confirmPassword = undefined;
 })
-userSchema.method.resetHandler = function (password, confirmPassword) {
-    const salt = await bcrypt.genSalt(10);
-    // password convert to text
-    this.password = await bcrypt.hash(this.password, salt);
-    this.password = password;
-    this.confirmPassword = this.confirmPassword;
-    // token reuse is not possible
-    this.token = undefined;
-}
+userSchema.method.resetHandler =
+    async function (password, confirmPassword) {
+        const salt = await bcrypt.genSalt(10);
+        // password convert to text
+        this.password = await bcrypt.hash(this.password, salt);
+        this.password = password;
+        this.confirmPassword = this.confirmPassword;
+        // token reuse is not possible
+        this.token = undefined;
+    }
 const userModel = mongoose.model("userModel", userSchema);
 
 module.exports = userModel
