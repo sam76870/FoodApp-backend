@@ -17,7 +17,7 @@ function AuthProvider({ children }) {
     }
     async function login(email, password) {
         try {
-            const data = await axios.post("api/auth/login", {
+            const data = await axios.post("api/user/login", {
                 email: email,
                 password: password
             });
